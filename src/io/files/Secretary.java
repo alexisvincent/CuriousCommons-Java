@@ -1,5 +1,6 @@
 package io.files;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.DirectoryIteratorException;
 import java.nio.file.DirectoryStream;
@@ -31,6 +32,18 @@ public class Secretary {
             ex.printStackTrace();
         }
         return files;
+    }
+    
+    public static Path getSubFile (Path path, String fileName) throws FileNotFoundException {
+        ArrayList<Path> files = getDirectoryFiles(path);
+        
+        for (Path file : files) {
+            if (file.getFileName().toString().equals(fileName)) {
+                return file;
+            }
+        }
+        
+        throw new FileNotFoundException();
     }
 
     public static void touch(Path path) {
