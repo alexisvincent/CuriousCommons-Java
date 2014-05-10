@@ -64,6 +64,4 @@ public class ProcessingQueue implements Runnable {
         public boolean doJob() ;
         public boolean mustBeRemoved();
     }
-    
-    
 }

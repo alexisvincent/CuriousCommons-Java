@@ -16,7 +16,7 @@ public abstract class MotionSegment extends Segment {
         private int deltaX = 0;
 
         public MotionSegment(Motion motion, int frameQue, int totalFrames, int initialPosition, int finalPosition, AComponent component) {
-            super(motion, frameQue, totalFrames);
+            super(motion, frameQue, totalFrames, "MotionSegment");
 
             this.initialPosition = initialPosition;
             this.deltaX = finalPosition - initialPosition;
@@ -31,7 +31,6 @@ public abstract class MotionSegment extends Segment {
         @Override
         public boolean doAnimation(int currentFrame) {
             if (isCompiled()) {
-                
                 for(Segment.StateMap stateMap : compiledSegment) {
                     if (stateMap.getFrame() == currentFrame) {
                         updatePosition(stateMap);

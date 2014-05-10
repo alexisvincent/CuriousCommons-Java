@@ -7,6 +7,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 import javax.swing.Timer;
 import swing.components.AFrame;
 
@@ -19,10 +21,12 @@ public class GUI {
     private AFrame frame;
 
     private GraphicsDevice graphicsDevice;
+    
+    private RepaintQue repaintQue;
 
     private boolean doubleBuffering;
     private BufferStrategy bufferStratagy;
-    
+
     private Timer repaintTimer;
 
     public GUI(String applicationName) {
@@ -32,6 +36,7 @@ public class GUI {
     private void init(String applicationName) {
         this.frame = new AFrame(applicationName).setGoodDefaults();
         graphicsDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        repaintQue = new RepaintQue();
     }
 
     public AFrame getFrame() {
@@ -60,7 +65,7 @@ public class GUI {
 
     public boolean startPainting(int frameRate) {
         if (repaintTimer == null) {
-            repaintTimer = new Timer(1000/frameRate, new ActionListener() {
+            repaintTimer = new Timer(1000 / frameRate, new ActionListener() {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -96,13 +101,13 @@ public class GUI {
         }
         return false;
     }
-    
+
     public boolean setFullScreen(boolean fullScreen) {
         int refreshRate = 0;
         boolean successfull = false;
 
         if (this.repaintTimer != null && this.repaintTimer.isRunning()) {
-            refreshRate = 1000/this.repaintTimer.getDelay();
+            refreshRate = 1000 / this.repaintTimer.getDelay();
             this.stopPainting();
         }
 
@@ -117,19 +122,68 @@ public class GUI {
         if (refreshRate > 0) {
             this.startPainting(refreshRate);
         }
-        
+
         return successfull;
     }
+    
+//    public void repaint(int amount) {
+//        repaintQue.repaint(amount);
+//    }
 
     public void repaint() {
-        if (doubleBuffering) {
-            Graphics graphics = bufferStratagy.getDrawGraphics();
-            this.getFrame().getDecorationPane().paint(graphics);
-            graphics.dispose();
-            bufferStratagy.show();
-        } else {
-            this.getFrame().repaint(1);
+//        if (doubleBuffering) {
+//            Graphics graphics = bufferStratagy.getDrawGraphics();
+//            this.getFrame().getDecorationPane().paint(graphics);
+//            graphics.dispose();
+//            bufferStratagy.show();
+//        } else {
+            this.getFrame().repaint(10);
+//        }
+    }
+
+    private class RepaintQue implements Runnable {
+
+        private final LinkedBlockingQueue<Integer> repaintQue;
+
+        private final Thread thread;
+        private boolean running;
+
+        public RepaintQue() {
+            repaintQue = new LinkedBlockingQueue<>();
+            running = false;
+            thread = new Thread(this);
+        }
+
+        public void repaint(int amount) {
+            repaintQue.add(amount);
+        }
+
+        public void start() {
+            running = true;
+            thread.start();
+        }
+
+        public void stop() {
+            running = false;
+            thread.interrupt();
+        }
+
+        @Override
+        public void run() {
+            while (running) {
+                try {
+                    int repaint = repaintQue.poll(5, TimeUnit.MINUTES);
+                    
+                    for (int i = 0; i < repaint; i++) {
+                        //GUI.this.paint();
+                        Thread.sleep(30);
+                    }
+                    
+                } catch (InterruptedException ex) {
+                    System.out.println("Processing Que Interupted");
+                }
+            }
         }
     }
-    
+
 }

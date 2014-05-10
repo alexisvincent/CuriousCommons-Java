@@ -2,7 +2,6 @@ package animationEngine;
 
 import java.util.ArrayList;
 
-
 /**
  *
  * @author alexisvincent
@@ -10,18 +9,24 @@ import java.util.ArrayList;
 public abstract class Segment {
 
     private Motion motion;
-
     private int frameQue;
+    private int duration;
 
-    protected final ArrayList<StateMap> compiledSegment;
+    protected ArrayList<StateMap> compiledSegment;
     private boolean compiled;
+    
+    private String tag;
 
-    private int totalFrames;
-
-    protected Segment(Motion motion, int frameQue, int totalFrames) {
+    protected Segment(Motion motion, int frameQue, int duration, String tag) {
         this.motion = motion;
         this.frameQue = frameQue;
-        this.totalFrames = totalFrames;
+        this.duration = duration;
+        this.tag = tag;
+
+        init();
+    }
+
+    private void init() {
         this.compiledSegment = new ArrayList<>();
     }
 
@@ -42,13 +47,21 @@ public abstract class Segment {
         this.frameQue = frameQue;
     }
 
-    public int getTotalFrames() {
-        return totalFrames;
+    public int getDuration() {
+        return duration;
     }
 
-    public void setTotalFrames(int totalFrames) {
-        this.totalFrames = totalFrames;
+    public void setDuration(int duration) {
+        this.duration = duration;
         setCompiled(false);
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public ArrayList getCompiledSegment() {
@@ -59,15 +72,15 @@ public abstract class Segment {
         return compiled;
     }
 
-    private void setCompiled(boolean compiled) {
+    protected void setCompiled(boolean compiled) {
         this.compiled = compiled;
     }
 
     public void compile() {
         if (!isCompiled()) {
             getCompiledSegment().clear();
-            for (int i = 0; i <= getTotalFrames(); i++) {
-                getCompiledSegment().add(new StateMap(i, getState(getMotion().getMotionCoefficient(i, getTotalFrames()))));
+            for (int i = 0; i <= getDuration(); i++) {
+                getCompiledSegment().add(new StateMap(i, getState(getMotion().getMotionCoefficient(i, getDuration()))));
             }
             setCompiled(true);
         }
@@ -76,8 +89,9 @@ public abstract class Segment {
     protected abstract Object getState(double motionCoEF);
 
     public abstract boolean doAnimation(int currentFrame);
-    
+
     public class StateMap {
+
         private int frame;
         private Object state;
 
@@ -101,7 +115,5 @@ public abstract class Segment {
         public void setState(Object state) {
             this.state = state;
         }
-        
     }
-
 }

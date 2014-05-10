@@ -12,6 +12,8 @@ import java.awt.RenderingHints;
  */
 public class UIToolkit {
     
+    
+    //
     private static boolean ANTIALIAS = true;
 
     public static boolean isANTIALIAS() {

@@ -1,19 +1,16 @@
 package swing.components;
 
 import animationEngine.Animator;
-import animationEngine.TimeLine;
+import animationEngine.SegmentGroup;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.Random;
-import javax.swing.DebugGraphics;
 import javax.swing.JComponent;
 import swing.toolkit.UIToolkit;
 
@@ -27,7 +24,7 @@ public class AComponent extends JComponent implements Animator {
     protected boolean focus = false;
     protected boolean hover = false;
     
-    protected ArrayList<TimeLine> timelines;
+    protected SegmentGroup segmentGroup;
     
     protected Point position;
     private AColor background;
@@ -40,7 +37,7 @@ public class AComponent extends JComponent implements Animator {
         setName(name);
         setDoubleBuffered(true);
         
-        this.timelines = new ArrayList<>();
+        this.segmentGroup = new SegmentGroup();
         
         this.addMouseListener(new MouseAdapter() {
 
@@ -73,6 +70,10 @@ public class AComponent extends JComponent implements Animator {
         });
     }
 
+    public SegmentGroup getSegmentGroup() {
+        return segmentGroup;
+    }
+    
     public boolean isDebugMode() {
         return debugMode;
     }
@@ -129,17 +130,6 @@ public class AComponent extends JComponent implements Animator {
 
     @Override
     public void doAnimation() {
-        if (!timelines.isEmpty()) {
-            timelines.get(0).doAnimation();
-            if (timelines.get(0).isComplete()) {
-                timelines.remove(0);
-            }
-        }
+        segmentGroup.doAnimation();
     }
-
-    @Override
-    public void addTimeline(TimeLine timeline) {
-        this.timelines.add(timeline);
-    }
-
 }

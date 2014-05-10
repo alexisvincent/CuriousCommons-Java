@@ -1,12 +1,6 @@
 package applicationFramework.core;
 
-import animationEngine.MotionFactory;
-import animationEngine.TimeLine;
-import animationEngine.segments.ColorSegment;
-import animationEngine.segments.HorizontalMotionSegment;
-import animationEngine.segments.VerticalMotionSegment;
 import applicationFramework.ui.GUI;
-import concurrency.ProcessingQueue;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -80,28 +74,28 @@ public class ApplicationTest extends Application {
             
             comp.setBackground(new AColor(AColor.DarkGrey));
             comp.setSize(100, 100);
-            final TimeLine timeline = new TimeLine();
-            timeline.addSegment(new ColorSegment(MotionFactory.getExponential(2), 50, 300, AColor.DarkGrey, AColor.Red, comp.getBackground()));
-            timeline.addSegment(new ColorSegment(MotionFactory.getLinear(), 350, 500, AColor.Red, AColor.DarkBlue, comp.getBackground()));
-            timeline.addSegment(new HorizontalMotionSegment(MotionFactory.getLinear(), 60, 600, 0, 600, comp));
-            timeline.addSegment(new VerticalMotionSegment(MotionFactory.getExponential(0.5), 60, 300, 0, 300, comp));
-            timeline.addSegment(new VerticalMotionSegment(MotionFactory.getExponential(2), 361, 300, 300, 0, comp));
-            
-            processingQueue.addJob(new ProcessingQueue.Job() {
-
-                @Override
-                public boolean doJob() {
-                    timeline.compile();
-                    return true;
-                }
-
-                @Override
-                public boolean mustBeRemoved() {
-                    return true;
-                }
-            });
-            
-            comp.addTimeline(timeline);
+//            final TimeLine timeline = new TimeLine();
+//            timeline.addSegment(new ColorSegment(MotionFactory.getExponential(2), 50, 300, AColor.DarkGrey, AColor.Red, comp.getBackground()));
+//            timeline.addSegment(new ColorSegment(MotionFactory.getLinear(), 350, 500, AColor.Red, AColor.DarkBlue, comp.getBackground()));
+//            timeline.addSegment(new HorizontalMotionSegment(MotionFactory.getLinear(), 60, 600, 0, 600, comp));
+//            timeline.addSegment(new VerticalMotionSegment(MotionFactory.getExponential(0.5), 60, 300, 0, 300, comp));
+//            timeline.addSegment(new VerticalMotionSegment(MotionFactory.getExponential(2), 361, 300, 300, 0, comp));
+//            
+//            processingQueue.addJob(new ProcessingQueue.Job() {
+//
+//                @Override
+//                public boolean doJob() {
+//                    timeline.compile();
+//                    return true;
+//                }
+//
+//                @Override
+//                public boolean mustBeRemoved() {
+//                    return true;
+//                }
+//            });
+//            
+//            comp.addTimeline(timeline);
             
             this.add(comp);
             

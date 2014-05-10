@@ -20,7 +20,7 @@ public class ColorSegment extends Segment {
         private final int deltaAlpha;
 
         public ColorSegment(Motion motion, int frameQue, int totalFrames, AColor initialColor, AColor finalColor, AColor color) {
-            super(motion, frameQue, totalFrames);
+            super(motion, frameQue, totalFrames, "ColorSegment");
 
             this.initialColor = initialColor;
             this.finalColor = finalColor;

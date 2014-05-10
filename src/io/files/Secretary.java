@@ -1,7 +1,9 @@
 package io.files;
 
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.DirectoryIteratorException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -73,5 +75,9 @@ public class Secretary {
         if (path.toFile().exists()) {
             FileUtils.writeByteArrayToFile(path.toFile(), byteArray);
         }
+    }
+    
+    public static PrintWriter getFileInputStream(Path path, boolean append) throws IOException {
+        return new PrintWriter(new FileWriter(path.toFile(), append));
     }
 }

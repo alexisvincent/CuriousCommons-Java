@@ -17,7 +17,7 @@ public class AtomicIntegerSegment extends Segment {
         private final int delta;
 
         public AtomicIntegerSegment(Motion motion, int frameQue, int totalFrames, int initialValue, int finalValue, AtomicInteger integer) {
-            super(motion, frameQue, totalFrames);
+            super(motion, frameQue, totalFrames, "AtomicIntegerSegment");
 
             this.initialValue = initialValue;
             this.delta = finalValue - initialValue;

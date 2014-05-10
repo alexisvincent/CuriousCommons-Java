@@ -16,7 +16,7 @@ public class AtomicFloatSegment extends Segment {
         private final float delta;
 
         public AtomicFloatSegment(Motion motion, int frameQue, int totalFrames, float initialValue, float finalValue, AtomicFloat atomicFloat) {
-            super(motion, frameQue, totalFrames);
+            super(motion, frameQue, totalFrames, "AtomicFloatSegment");
 
             this.initialValue = initialValue;
             this.delta = finalValue - initialValue;
