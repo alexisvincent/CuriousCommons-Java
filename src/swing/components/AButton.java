@@ -19,15 +19,14 @@ public class AButton extends AComponent {
     private boolean selected;
 
     public AButton(String name) {
-
-        backdrop = backdropNormal;
-        font = fontNormal;
-
         backdropNormal = new Color(0, 120, 200, 40);
         backdropMouseOver = new Color(0, 120, 200, 100);
 
         fontNormal = backdropMouseOver.brighter().brighter();
         fontMouseOver = new Color(255, 255, 255, 200);
+        
+        backdrop = backdropNormal;
+        font = fontNormal;
 
         this.setName(name);
         this.addMouseListener(new MouseAdapter() {

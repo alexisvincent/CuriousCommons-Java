@@ -12,7 +12,7 @@ public abstract class Application {
     protected GUI gui;
     protected ProcessingQueue processingQueue;
     protected static Application INSTANCE;
-    
+
     protected Application() {
         processingQueue = new ProcessingQueue();
         processingQueue.start();
@@ -20,7 +20,7 @@ public abstract class Application {
     }
     
     protected abstract void initGUI();
-    
+
     public void quit() {
         getUI().hide();
         System.exit(0);

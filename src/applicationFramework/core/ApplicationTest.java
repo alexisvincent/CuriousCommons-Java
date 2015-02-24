@@ -38,7 +38,7 @@ public class ApplicationTest extends Application {
                 gui = new GUI("Application Test").setDimensions(new Dimension(900, 700)).setGoodDefaults();
                 gui.getFrame().setContentPane(new ApplicationPane());
 
-                //gui.setFullScreen(true);
+                gui.setFullScreen(true);
                 gui.show();
                 gui.enableDoubleBuffering(true);
                 gui.startPainting(30);

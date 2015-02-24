@@ -5,6 +5,8 @@ import animationEngine.SegmentGroup;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -23,6 +25,8 @@ public class AComponent extends JComponent implements Animator {
     protected boolean debugMode = false;
     protected boolean focus = false;
     protected boolean hover = false;
+    
+    public GridBagConstraints gc;
     
     protected SegmentGroup segmentGroup;
     
@@ -68,7 +72,14 @@ public class AComponent extends JComponent implements Animator {
                 repaint();
             }
         });
+        
+        gc = UIToolkit.getDefaultGridBagConstraints();
+        setLayout(new GridBagLayout());
+        
+        init();
     }
+    
+    protected void init(){};
 
     public SegmentGroup getSegmentGroup() {
         return segmentGroup;

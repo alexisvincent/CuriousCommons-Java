@@ -19,6 +19,9 @@ public class AFrame extends JFrame {
 
     private DecorationPane decorationPane;
 
+    private Runnable exitRunnable;
+    
+    
     public AFrame() {
         this("Default");
     }
@@ -90,21 +93,30 @@ public class AFrame extends JFrame {
 
     public void close() {
         switch (getDefaultCloseOperation()) {
-            case WindowConstants.DO_NOTHING_ON_CLOSE:
+            case DO_NOTHING_ON_CLOSE:
                 break;
-            case WindowConstants.DISPOSE_ON_CLOSE:
+            case DISPOSE_ON_CLOSE:
                 this.setVisible(false);
                 this.dispose();
                 break;
-            case WindowConstants.EXIT_ON_CLOSE:
+            case EXIT_ON_CLOSE:
                 this.setVisible(false);
                 this.dispose();
-                System.exit(0);
+                
+                if (this.exitRunnable != null) {
+                    exitRunnable.run();
+                } else {
+                    System.exit(0);
+                }
                 break;
-            case WindowConstants.HIDE_ON_CLOSE:
+            case HIDE_ON_CLOSE:
                 this.setVisible(false);
                 break;
         }
+    }
+    
+    public void setExitRunnable(Runnable runnable) {
+        this.exitRunnable = runnable;
     }
 
     public void maximise() {

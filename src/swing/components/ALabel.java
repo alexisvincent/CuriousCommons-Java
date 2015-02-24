@@ -10,7 +10,7 @@ import swing.toolkit.UIToolkit;
  * @about simple label
  * @author alexisvincent
  */
-public class ALabel extends JComponent {
+public class ALabel extends AComponent {
     
     private Color labelColor;
     
